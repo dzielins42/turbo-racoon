@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DummyComponent } from './dummy/dummy.component';
+import { NameGeneratorsComponent } from './name-generators/name-generators.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DummyComponent
+    DummyComponent,
+    NameGeneratorsComponent
   ],
   imports: [
     BrowserModule,

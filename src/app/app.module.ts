@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { DummyComponent } from './dummy/dummy.component';
 import { NameGeneratorsComponent } from './name-generators/name-generators.component';
 import { NameGeneratorComponent } from './name-generator/name-generator.component';
+import { NameGeneratorsService } from './name-generators.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { NameGeneratorComponent } from './name-generator/name-generator.componen
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [NameGeneratorsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

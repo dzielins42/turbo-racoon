@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 
+import { NameGenerator } from './name-generator/name-generator';
 import { DummyNameGenerator } from './name-generator/dummy-name-generator';
+
+import {Observable} from 'rxjs/Observable';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class NameGeneratorsService {
 
-  constructor() { }
+  generators: {[key: string]: NameGenerator} = {};
 
-  getGenerator(id: string) {
-    return new DummyNameGenerator();
+  constructor() {
+    this.generators["dummy"] = new DummyNameGenerator();
+  }
+
+  getGenerator(id: string) : Observable<NameGenerator> {
+    return new BehaviorSubject(this.generators[id]);
   }
 
 }

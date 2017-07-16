@@ -5,7 +5,6 @@ import { DummyNameGenerator } from './name-generator/dummy-name-generator';
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class NameGeneratorsService {
@@ -13,11 +12,15 @@ export class NameGeneratorsService {
   generators: {[key: string]: NameGenerator} = {};
 
   constructor() {
-    this.generators["dummy"] = new DummyNameGenerator();
+    this.initGenerators();
   }
 
   getGenerator(id: string) : Observable<NameGenerator> {
     return Observable.of(this.generators[id]);
+  }
+
+  private initGenerators() {
+    this.generators["dummy"] = new DummyNameGenerator();
   }
 
 }

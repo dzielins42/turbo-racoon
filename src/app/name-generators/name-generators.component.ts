@@ -15,9 +15,7 @@ export class NameGeneratorsComponent implements OnInit {
 
   ngOnInit() {
     this.nameGeneratorsService.getGenerator("dummy")
-      .subscribe(generator => {
-        this.selectedGenerator = generator
-      });
+      .subscribe(generator => this.selectedGenerator = generator);
   }
 
 }

@@ -1,5 +1,4 @@
 <p>
   name-generators works!
-
-  <app-name-generator [generator]="selectedGenerator"></app-name-generator>
+  <app-name-generator *ngIf="selectedGenerator" [generator]="selectedGenerator"></app-name-generator>
 </p>

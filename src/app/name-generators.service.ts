@@ -10,26 +10,35 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toArray';
+import 'rxjs/add/operator/first';
+import { BehaviorSubject} from "rxjs/Rx";
 
 @Injectable()
 export class NameGeneratorsService {
 
   generators: {[key : string]: NameGenerator} = {};
+  initialized : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: Http) {
     this.initGenerators();
   }
 
   getGenerator(id: string) : Observable<NameGenerator> {
-    return Observable.of(this.generators[id]);
+    // Cannot use Observable.of(this.generators[id]), because undefined value is passed to Observable.of
+    // This will wait untill generators are initialized and then fire up provided observable which will take value from this.generators
+    return this.ifReady(Observable.of(id).map(id => this.generators[id]));
+  }
+
+  private ifReady(observable : Observable<any>) : Observable<any> {
+    return this.initialized.filter(x => x == true).first().flatMap(x => observable);
   }
 
   private initGenerators() {
-    //this.generators["dummy"] = new DummyNameGenerator();
-
     let o1 = this.getArraysToLoad()
         .flatMap(arraysToLoad => Observable.from(arraysToLoad));
     let o2 = o1.concatMap(arrayToLoad => this.loadArray(arrayToLoad));
@@ -40,10 +49,13 @@ export class NameGeneratorsService {
             return { id: arrayToLoad, array: loadedArray };
         }
     );
+
     observable
         .toArray()
         .flatMap(loadedArrays => this.buildGenerators(loadedArrays))
-        .subscribe(generatorWrapper => this.generators[generatorWrapper.id] = generatorWrapper.generator);
+        .subscribe(generatorWrapper => this.generators[generatorWrapper.id] = generatorWrapper.generator,
+        error => {},
+        () => this.initialized.next(true));
   }
 
   private loadArray(uri : string) : Observable<string[]> {
@@ -58,9 +70,9 @@ export class NameGeneratorsService {
   }
   
   private buildGenerators(arrays) : Observable<NameGeneratorWrapper> {
-    console.log(arrays);
     return Observable.create(observer => {
       observer.next(new NameGeneratorWrapper("dummy", new DummyNameGenerator()));
+
       observer.complete();
     });
   }

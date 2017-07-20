@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import { NameGenerator } from './name-generator/name-generator';
 import { NameGeneratorWrapper } from './name-generator/nam-gen-wrapper';
 import { DummyNameGenerator } from './name-generator/dummy-name-generator';
+import { ArrayNameGenerator } from './name-generator/array-nam-gen';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -15,6 +16,7 @@ import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toArray';
+import 'rxjs/add/operator/reduce';
 import 'rxjs/add/operator/first';
 import { BehaviorSubject} from "rxjs/Rx";
 
@@ -50,8 +52,10 @@ export class NameGeneratorsService {
         }
     );
 
-    observable
-        .toArray()
+    let arrays : {[key : string]: string[]} = {};
+	
+	observable
+		.reduce((acc,curr)=>{acc[curr.id]=curr.array; return acc;}, arrays)
         .flatMap(loadedArrays => this.buildGenerators(loadedArrays))
         .subscribe(generatorWrapper => this.generators[generatorWrapper.id] = generatorWrapper.generator,
         error => {},
@@ -72,6 +76,7 @@ export class NameGeneratorsService {
   private buildGenerators(arrays) : Observable<NameGeneratorWrapper> {
     return Observable.create(observer => {
       observer.next(new NameGeneratorWrapper("dummy", new DummyNameGenerator()));
+      observer.next(new NameGeneratorWrapper("human-name-basic", new ArrayNameGenerator(arrays["assets/human_name_basic.json"])));
 
       observer.complete();
     });

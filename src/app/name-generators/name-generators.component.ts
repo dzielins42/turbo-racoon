@@ -14,7 +14,7 @@ export class NameGeneratorsComponent implements OnInit {
   constructor(private nameGeneratorsService: NameGeneratorsService) { }
 
   ngOnInit() {
-    this.nameGeneratorsService.getGenerator("dummy")
+    this.nameGeneratorsService.getGenerator("human-name-basic")
       .subscribe(generator => this.selectedGenerator = generator);
   }
 

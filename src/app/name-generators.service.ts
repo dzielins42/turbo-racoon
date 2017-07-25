@@ -53,9 +53,9 @@ export class NameGeneratorsService {
     );
 
     let arrays : {[key : string]: string[]} = {};
-	
-	observable
-		.reduce((acc,curr)=>{acc[curr.id]=curr.array; return acc;}, arrays)
+
+    observable
+        .reduce((acc,curr)=>{acc[curr.id]=curr.array; return acc;}, arrays)
         .flatMap(loadedArrays => this.buildGenerators(loadedArrays))
         .subscribe(generatorWrapper => this.generators[generatorWrapper.id] = generatorWrapper.generator,
         error => {},

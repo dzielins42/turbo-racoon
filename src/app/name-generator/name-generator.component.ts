@@ -10,12 +10,20 @@ import { NameGenerator } from './name-generator';
 export class NameGeneratorComponent implements OnInit {
   @Input()
   generator: NameGenerator;
-  generated: string;
+  generatedItems: string[];
 
   constructor() { }
 
   ngOnInit() {
-    this.generated = this.generator.generate();
+    this.generate();
+  }
+  
+  generate() {
+    this.generateMultiple(10);
+  }
+  
+  generateMultiple(count : number) {
+    this.generatedItems = this.generator.generateMultiple(count);
   }
 
 }

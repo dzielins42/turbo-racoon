@@ -1,5 +1,4 @@
-<p>
-  name-generator works!
-  
-  {{generated}}
-</p>
+<li *ngFor="let generatedItem of generatedItems">
+	{{generatedItem}}
+</li>
+<span (click)="generate()">Generate</span>

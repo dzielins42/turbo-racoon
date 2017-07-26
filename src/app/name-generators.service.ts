@@ -5,6 +5,9 @@ import { NameGenerator } from './name-generator/name-generator';
 import { NameGeneratorWrapper } from './name-generator/nam-gen-wrapper';
 import { DummyNameGenerator } from './name-generator/dummy-name-generator';
 import { ArrayNameGenerator } from './name-generator/array-nam-gen';
+import { JoinNameGenerator } from './name-generator/join-nam-gen';
+import { PartsNameGenerator } from './name-generator/parts-nam-gen';
+import { StaticNameGenerator } from './name-generator/static-nam-gen';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

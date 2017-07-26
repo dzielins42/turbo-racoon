@@ -30,6 +30,23 @@ export class NameGeneratorsService {
     this.initGenerators();
   }
 
+  // This builds NameGeneratorFront instances locally at runtime, but in the
+  // future it may fetch them from some provider
+  getAvailableGenerators() : Observable<NameGeneratorFront[]> {
+    return Observable.create(observer => {
+      let availableGenerators : NameGeneratorFront[] = [];
+      availableGenerators.push(new NameGeneratorFront(
+        "human-name-basic","Human Names (Basic)"
+      ));
+      availableGenerators.push(new NameGeneratorFront(
+        "human-name-male-list1","Human Male Names (List1)"
+      ));
+      observer.next(availableGenerators);
+
+      observer.complete();
+    });
+  }
+
   getGenerator(id: string) : Observable<NameGenerator> {
     // Cannot use Observable.of(this.generators[id]), because undefined value is passed to Observable.of
     // This will wait untill generators are initialized and then fire up provided observable which will take value from this.generators
@@ -57,9 +74,11 @@ export class NameGeneratorsService {
     observable
         .reduce((acc,curr)=>{acc[curr.id]=curr.array; return acc;}, arrays)
         .flatMap(loadedArrays => this.buildGenerators(loadedArrays))
-        .subscribe(generatorWrapper => this.generators[generatorWrapper.id] = generatorWrapper.generator,
-        error => {},
-        () => this.initialized.next(true));
+        .subscribe(
+          generatorWrapper => this.generators[generatorWrapper.id] = generatorWrapper.generator,
+          error => {},
+          () => this.initialized.next(true)
+        );
   }
 
   private loadArray(uri : string) : Observable<string[]> {
@@ -72,14 +91,33 @@ export class NameGeneratorsService {
         'assets/human_name_male_list1.json',
     ]);
   }
-  
+
   private buildGenerators(arrays) : Observable<NameGeneratorWrapper> {
     return Observable.create(observer => {
       observer.next(new NameGeneratorWrapper("dummy", new DummyNameGenerator()));
-      observer.next(new NameGeneratorWrapper("human-name-basic", new ArrayNameGenerator(arrays["assets/human_name_basic.json"])));
+      observer.next(
+        new NameGeneratorWrapper("human-name-basic",
+        new ArrayNameGenerator(arrays["assets/human_name_basic.json"]))
+      );
+      observer.next(
+        new NameGeneratorWrapper("human-name-male-list1",
+        new ArrayNameGenerator(arrays["assets/human_name_male_list1.json"]))
+      );
 
       observer.complete();
     });
+  }
+
+}
+
+export class NameGeneratorFront {
+
+  id : string;
+  name : string;
+
+  constructor(id : string, name : string) {
+    this.id = id;
+    this.name = name;
   }
 
 }

@@ -1,2 +1,5 @@
 name-generators works!
+<li *ngFor="let availableGenerator of availableGenerators">
+	<span (click)="onGeneratorSelected(availableGenerator.id)">{{availableGenerator.name}}</span>
+</li>
 <app-name-generator *ngIf="selectedGenerator" [generator]="selectedGenerator"></app-name-generator>

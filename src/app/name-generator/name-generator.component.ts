@@ -8,22 +8,25 @@ import { NameGenerator } from './name-generator';
   styleUrls: ['./name-generator.component.css']
 })
 export class NameGeneratorComponent implements OnInit {
+
+  private _generator : NameGenerator;
   @Input()
-  generator: NameGenerator;
+  set generator(value : NameGenerator) {
+    this._generator = value;
+    this.generate();
+  }
   generatedItems: string[];
 
   constructor() { }
 
-  ngOnInit() {
-    this.generate();
-  }
-  
+  ngOnInit() { }
+
   generate() {
     this.generateMultiple(10);
   }
-  
+
   generateMultiple(count : number) {
-    this.generatedItems = this.generator.generateMultiple(count);
+    this.generatedItems = this._generator.generateMultiple(count);
   }
 
 }

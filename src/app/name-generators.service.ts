@@ -9,6 +9,8 @@ import { PartsNameGenerator } from './name-generator/parts-nam-gen';
 import { StaticNameGenerator } from './name-generator/static-nam-gen';
 import { RepetitiveNameGenerator } from './name-generator/rep-nam-gen';
 import { ProbabilityNameGenerator } from './name-generator/prob-nam-gen';
+import { RandomizedNameGenerator } from './name-generator/rand-nam-gen';
+import { CapitalizeNameGenerator } from './name-generator/name-generators';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -44,6 +46,16 @@ export class NameGeneratorsService {
       ));
       availableGenerators.push(new NameGeneratorFront(
         "human-name-male-list1","Human Male Names (List1)"
+      ));
+      // Dwarf Name Generators
+      availableGenerators.push(new NameGeneratorFront(
+        "dwarf-name-male", "Dwarf Male Names"
+      ));
+      availableGenerators.push(new NameGeneratorFront(
+        "dwarf-name-female", "Dwarf Female Names"
+      ));
+      availableGenerators.push(new NameGeneratorFront(
+        "dwarf-name-clan", "Dwarf Clan Names"
       ));
       observer.next(availableGenerators);
 
@@ -93,6 +105,17 @@ export class NameGeneratorsService {
     return Observable.of([
         'assets/human_name_basic.json',
         'assets/human_name_male_list1.json',
+
+        'assets/generators/name/common/names_color.json',
+        'assets/generators/name/common/names_gem.json',
+        'assets/generators/name/common/names_metal.json',
+        'assets/generators/name/common/names_wood.json',
+
+        'assets/generators/name/dwarf/names_dwarf_prefix1.json',
+        'assets/generators/name/dwarf/names_dwarf_male_suffix1.json',
+        'assets/generators/name/dwarf/names_dwarf_female_suffix1.json',
+        'assets/generators/name/dwarf/names_dwarf_clan_prefix1.json',
+        'assets/generators/name/dwarf/names_dwarf_clan_suffix1.json',
     ]);
   }
 
@@ -106,6 +129,51 @@ export class NameGeneratorsService {
       observer.next(
         new NameGeneratorWrapper("human-name-male-list1",
         new ArrayNameGenerator(arrays["assets/human_name_male_list1.json"]))
+      );
+      // Common Name Generators
+      let color = new ArrayNameGenerator(arrays["assets/generators/name/common/names_color.json"]);
+      let gem = new ArrayNameGenerator(arrays["assets/generators/name/common/names_gem.json"]);
+      let metal = new ArrayNameGenerator(arrays["assets/generators/name/common/names_metal.json"]);
+      let wood = new ArrayNameGenerator(arrays["assets/generators/name/common/names_wood.json"]);
+      // Dwarf Name Generators
+      let dwarfSuffix = new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_prefix1.json"]);
+      observer.next(
+        new NameGeneratorWrapper("dwarf-name-male",
+        new PartsNameGenerator(
+          [
+            dwarfSuffix,
+            new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_male_suffix1.json"])
+          ],
+          ""
+        ))
+      );
+      observer.next(
+        new NameGeneratorWrapper("dwarf-name-female",
+        new PartsNameGenerator(
+          [
+            dwarfSuffix,
+            new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_female_suffix1.json"])
+          ],
+          ""
+        ))
+      );
+      observer.next(
+        new NameGeneratorWrapper(
+          "dwarf-name-clan",
+          new CapitalizeNameGenerator(new PartsNameGenerator(
+            [
+              new RandomizedNameGenerator([
+                color,
+                gem,
+                metal,
+                wood,
+                new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_clan_prefix1.json"])
+              ]),
+              new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_clan_suffix1.json"])
+            ],
+            ""
+          ))
+        )
       );
 
       observer.complete();

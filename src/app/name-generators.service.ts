@@ -130,51 +130,37 @@ export class NameGeneratorsService {
         new NameGeneratorWrapper("human-name-male-list1",
         new ArrayNameGenerator(arrays["assets/human_name_male_list1.json"]))
       );
+
       // Common Name Generators
       let color = new ArrayNameGenerator(arrays["assets/generators/name/common/names_color.json"]);
       let gem = new ArrayNameGenerator(arrays["assets/generators/name/common/names_gem.json"]);
       let metal = new ArrayNameGenerator(arrays["assets/generators/name/common/names_metal.json"]);
       let wood = new ArrayNameGenerator(arrays["assets/generators/name/common/names_wood.json"]);
+
       // Dwarf Name Generators
       let dwarfSuffix = new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_prefix1.json"]);
-      observer.next(
-        new NameGeneratorWrapper("dwarf-name-male",
-        new PartsNameGenerator(
-          [
-            dwarfSuffix,
-            new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_male_suffix1.json"])
-          ],
-          ""
-        ))
-      );
-      observer.next(
-        new NameGeneratorWrapper("dwarf-name-female",
-        new PartsNameGenerator(
-          [
-            dwarfSuffix,
-            new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_female_suffix1.json"])
-          ],
-          ""
-        ))
-      );
-      observer.next(
-        new NameGeneratorWrapper(
-          "dwarf-name-clan",
-          new CapitalizeNameGenerator(new PartsNameGenerator(
-            [
-              new RandomizedNameGenerator([
-                color,
-                gem,
-                metal,
-                wood,
-                new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_clan_prefix1.json"])
-              ]),
-              new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_clan_suffix1.json"])
-            ],
-            ""
-          ))
-        )
-      );
+      let dwarfMale = new PartsNameGenerator([
+        dwarfSuffix,
+        new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_male_suffix1.json"])
+      ]);
+      let dwarfFemale = new PartsNameGenerator([
+        dwarfSuffix,
+        new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_female_suffix1.json"])
+      ]);
+      let dwarfClan = new CapitalizeNameGenerator(new PartsNameGenerator([
+        new RandomizedNameGenerator([
+          color,
+          gem,
+          metal,
+          wood,
+          new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_clan_prefix1.json"])
+        ]),
+        new ArrayNameGenerator(arrays["assets/generators/name/dwarf/names_dwarf_clan_suffix1.json"])
+      ]));
+
+      observer.next(new NameGeneratorWrapper("dwarf-name-male", dwarfMale));
+      observer.next(new NameGeneratorWrapper("dwarf-name-female", dwarfFemale));
+      observer.next(new NameGeneratorWrapper("dwarf-name-clan", dwarfClan));
 
       observer.complete();
     });

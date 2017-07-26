@@ -4,7 +4,7 @@ export class PartsNameGenerator extends NameGenerator {
 
   constructor(
     private _parts : NameGenerator[],
-    private _separator : string
+    private _separator : string = ""
   ) {
     super();
   }

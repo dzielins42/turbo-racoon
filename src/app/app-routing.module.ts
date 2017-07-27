@@ -9,7 +9,7 @@ import { MaterialTestComponent } from './material-test/material-test.component';
 const routes: Routes = [
   { path: '', component:AppComponent },
   { path: 'dummy', component:DummyComponent },
-  { path: 'name-generators', component:NameGeneratorsComponent }
+  { path: 'name-generators', component:NameGeneratorsComponent },
   { path: 'material-test', component:MaterialTestComponent }
 ];
 

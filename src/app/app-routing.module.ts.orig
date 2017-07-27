@@ -3,14 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { DummyComponent } from './dummy/dummy.component';
+<<<<<<< HEAD
 import { NameGeneratorsComponent } from './name-generators/name-generators.component';
+=======
 import { MaterialTestComponent } from './material-test/material-test.component';
+>>>>>>> master
 
 const routes: Routes = [
   { path: '', component:AppComponent },
   { path: 'dummy', component:DummyComponent },
+<<<<<<< HEAD
   { path: 'name-generators', component:NameGeneratorsComponent }
+=======
   { path: 'material-test', component:MaterialTestComponent }
+>>>>>>> master
 ];
 
 @NgModule({

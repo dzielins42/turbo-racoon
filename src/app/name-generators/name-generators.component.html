@@ -1,5 +1,18 @@
-name-generators works!
-<li *ngFor="let availableGenerator of availableGenerators">
-	<span (click)="onGeneratorSelected(availableGenerator.id)">{{availableGenerator.name}}</span>
-</li>
+<div
+	fxLayout="row"
+	fxLayoutWrap>
+	<div
+		*ngFor="let generator of availableGenerators"
+		fxFlex.gt-sm="20" fxFlex.gt-xs="33" fxFlex="100">
+		<button
+			md-raised-button
+			color="primary"
+			(click)="onGeneratorSelected(generator.id)"
+			style="
+				height:100%;
+				width:100%;">
+			{{generator.name}}
+		</button>
+	</div>
+</div>
 <app-name-generator *ngIf="selectedGenerator" [generator]="selectedGenerator"></app-name-generator>

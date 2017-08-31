@@ -1,7 +1,7 @@
-import { NameGenerator } from './name-generator';
+import { LocalNameGenerator } from './local-name-generator';
 
-export class DummyNameGenerator extends NameGenerator {
-  generate() : string {
+export class DummyNameGenerator extends LocalNameGenerator {
+  generateSingle() : string {
     return "dummy";
   }
 }

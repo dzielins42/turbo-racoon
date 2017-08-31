@@ -10,7 +10,8 @@ export abstract class NameGenerator {
   }
 
   abstract generate() : string;
-  
+
+  // Generates random number between min (inclusive) and max (inclusive)
   getRandomInt(min : number, max : number) : number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }

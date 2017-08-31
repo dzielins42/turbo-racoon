@@ -4,13 +4,14 @@ import { Http } from '@angular/http';
 import { NameGenerator } from './name-generator/name-generator';
 import { NameGeneratorWrapper } from './name-generator/nam-gen-wrapper';
 import { DummyNameGenerator } from './name-generator/dummy-name-generator';
-import { ArrayNameGenerator } from './name-generator/array-nam-gen';
-import { PartsNameGenerator } from './name-generator/parts-nam-gen';
-import { StaticNameGenerator } from './name-generator/static-nam-gen';
-import { RepetitiveNameGenerator } from './name-generator/rep-nam-gen';
-import { ProbabilityNameGenerator } from './name-generator/prob-nam-gen';
-import { RandomizedNameGenerator } from './name-generator/rand-nam-gen';
-import { CapitalizeNameGenerator } from './name-generator/name-generators';
+
+import { ArrayNameGenerator }           from './name-generator/name-generators';
+import { CapitalizeNameGenerator }      from './name-generator/name-generators';
+import { PartsNameGenerator }           from './name-generator/name-generators';
+import { ProbabilityNameGenerator }     from './name-generator/name-generators';
+import { RandomizedNameGenerator }      from './name-generator/name-generators';
+import { RepetitiveNameGenerator }      from './name-generator/name-generators';
+import { StaticNameGenerator }          from './name-generator/name-generators';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

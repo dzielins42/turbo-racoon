@@ -15,7 +15,7 @@ export class ArrayNameGenerator extends LocalNameGenerator {
 export class CapitalizeNameGenerator extends LocalNameGenerator {
 
     constructor(
-        private _base: NameGenerator
+        private _base: LocalNameGenerator
     ) {
         super();
     }
@@ -29,7 +29,7 @@ export class CapitalizeNameGenerator extends LocalNameGenerator {
 // Wraps multiple NameGenerator instances and joins their results with separator
 export class PartsNameGenerator extends LocalNameGenerator {
   constructor(
-    private _parts : NameGenerator[],
+    private _parts : LocalNameGenerator[],
     private _separator : string = ""
   ) {
     super();
@@ -50,7 +50,7 @@ export class PartsNameGenerator extends LocalNameGenerator {
 export class ProbabilityNameGenerator extends LocalNameGenerator {
 
   constructor(
-    private _parts : NameGenerator[],
+    private _parts : LocalNameGenerator[],
     private _probability : number[]
   ) {
     // TODO validate
@@ -78,7 +78,7 @@ export class ProbabilityNameGenerator extends LocalNameGenerator {
 export class RandomizedNameGenerator extends LocalNameGenerator {
 
   constructor(
-    private _parts : NameGenerator[],
+    private _parts : LocalNameGenerator[],
   ) {
     super();
   }
@@ -94,7 +94,7 @@ export class RandomizedNameGenerator extends LocalNameGenerator {
 export class RepetitiveNameGenerator extends LocalNameGenerator {
 
   constructor(
-    private _base : NameGenerator,
+    private _base : LocalNameGenerator,
     private _separator : string,
     private _minReps : number,
     private _maxReps : number,
